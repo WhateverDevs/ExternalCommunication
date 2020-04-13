@@ -1,0 +1,25 @@
+{
+    "name": "ExternalToolCommunication.Test.Editor",
+    "references": [
+        "GUID:155f80439a61f1e44877b3e73cfd09a4",
+        "GUID:93e7bce66fb364a47804d71255043d1a",
+        "GUID:9cc1d19c000de1b47925a933c7940a2d",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
