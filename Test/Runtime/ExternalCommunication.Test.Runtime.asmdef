@@ -1,5 +1,5 @@
 {
-    "name": "ExternalToolCommunication.Test.Runtime",
+    "name": "ExternalCommunication.Test.Runtime",
     "references": [
         "GUID:27619889b8ba8c24980f49ee34dbb44a",
         "GUID:93e7bce66fb364a47804d71255043d1a"
