@@ -1,74 +1,36 @@
-﻿using System.Collections;
-using System.Threading;
+﻿using System.Threading;
+using WhateverDevs.Core.Runtime.Common;
 
-public class ThreadedJob
+namespace WhateverDevs.ExternalCommunication.Runtime
 {
-    //private bool isDone = true;
-    private object handle = new object();
-    private Thread thread = null;
-    /*public bool IsDone
+    /// <summary>
+    ///     ThreadedJob heritage from Simusafe
+    /// </summary>
+    public class ThreadedJob : Loggable<ThreadedJob>
     {
-        get
+        private object handle = new object();
+
+        private Thread thread;
+
+        public virtual void Start()
         {
-            bool tmp;
-            lock (handle)
-            {
-                tmp = isDone;
-            }
-            return tmp;
-        }
-        set
-        {
-            lock (handle)
-            {
-                isDone = value;
-            }
-        }
-    }*/
-
-    public virtual void Start()
-    {
-        //IsDone = false;
-
-        thread = new Thread(Run);
-        thread.Start();
-    }
-
-    public virtual void Abort()
-    {
-        if (thread != null)
-        {
-            thread.Abort();
-        }
-    }
-
-    protected virtual void ThreadFunction() { }
-
-    protected virtual void OnFinished() { }
-
-    /*public virtual bool Update()
-    {
-        if (IsDone)
-        {
-            OnFinished();
-            return true;
+            thread = new Thread(Run);
+            thread.Start();
         }
 
-        return false;
-    }
-
-    IEnumerator WaitFor()
-    {
-        while (!Update())
+        public virtual void Abort()
         {
-            yield return null;
+            if (thread != null) thread.Abort();
         }
-    }*/
 
-    private void Run()
-    {
-        ThreadFunction();
-        //IsDone = true;
-        //OnFinished();
+        protected virtual void ThreadFunction()
+        {
+        }
+
+        protected virtual void OnFinished()
+        {
+        }
+
+        private void Run() => ThreadFunction();
     }
 }

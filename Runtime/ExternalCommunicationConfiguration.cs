@@ -3,23 +3,26 @@ using System.Net.Sockets;
 using UnityEngine;
 using WhateverDevs.Core.Runtime.Configuration;
 
-
-[CreateAssetMenu(menuName = "WhateverDevs/ExternalToolCommunication/Configuration", fileName = "CommunicationConfiguration")]
-public class ExternalCommunicationConfiguration : ConfigurationScriptableHolderUsingFirstValidPersister<ExternalCommunicationConfigurationData>
+namespace WhateverDevs.ExternalCommunication.Runtime
 {
-    
-}
+    [CreateAssetMenu(menuName = "WhateverDevs/ExternalToolCommunication/Configuration",
+        fileName = "CommunicationConfiguration")]
+    public class ExternalCommunicationConfiguration : ConfigurationScriptableHolderUsingFirstValidPersister<
+        ExternalCommunicationConfigurationData>
+    {
+    }
 
-/// <summary>
-/// Testable example of configuration data.
-/// </summary>
-[Serializable]
-public class ExternalCommunicationConfigurationData : ConfigurationData
-{
-    public string processName;
-    public string ipAddress;
-    public int port;
-    public SocketType socketType;
-    public ProtocolType protocolType;
-    public int bufferSize = 1024;
+    /// <summary>
+    ///     ExternalCommunicationConfigurationData configuration data.
+    /// </summary>
+    [Serializable]
+    public class ExternalCommunicationConfigurationData : ConfigurationData
+    {
+        public string ProcessName;
+        public string IpAddress;
+        public int Port;
+        public SocketType SocketType;
+        public ProtocolType ProtocolType;
+        public int BufferSize = 1024;
+    }
 }

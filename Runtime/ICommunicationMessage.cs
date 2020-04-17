@@ -1,6 +1,20 @@
-﻿public interface ICommunicationMessage
+﻿namespace WhateverDevs.ExternalCommunication.Runtime
 {
-    void FromByteArray(byte[] data);
+    /// <summary>
+    ///     Interface to create your own communication message
+    /// </summary>
+    public interface ICommunicationMessage
+    {
+        /// <summary>
+        ///     Translate from byte array
+        /// </summary>
+        /// <param name="data">Byte arrary</param>
+        void FromByteArray(byte[] data);
 
-    byte[] ToByteArray();
+        /// <summary>
+        ///     Translate to byte array
+        /// </summary>
+        /// <returns>Byte array info</returns>
+        byte[] ToByteArray();
+    }
 }

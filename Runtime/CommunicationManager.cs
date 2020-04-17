@@ -1,61 +1,94 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Net.Sockets;
-using UnityEditor.VersionControl;
 using WhateverDevs.Core.Runtime.Common;
-using Debug = UnityEngine.Debug;
 
-public abstract class CommunicationManager : Loggable<CommunicationManager>
+namespace WhateverDevs.ExternalCommunication.Runtime
 {
-    public static long timestamp = 0;
-
-    protected ExternalCommunicationConfigurationData configurationData;
-    protected CommunicationThread communicationThread;
-    private volatile bool dataReceived = false;
-    
-    protected bool threadReady = false;
-    
-    public abstract void SendFirstMessage();
-
-    public abstract void SendLastMessage();
-    
-    public bool CheckProcess()
+    /// <summary>
+    ///     Abstract class for CommunicationManager manager.
+    /// </summary>
+    public abstract class CommunicationManager : Loggable<CommunicationManager>
     {
-        Process[] processes = Process.GetProcessesByName(configurationData.processName);
-        Process process;
-        
-        if (processes.Length != 0)
-        {
-            process = processes[0];
-            GetLogger().Debug("Process found" + process.MachineName);
-            return true;
-        }
-        
-        GetLogger().Error("Process not found");
-        return false;
-    }
+        /// <summary>
+        ///     ConfigurationData for the connection
+        /// </summary>
+        protected ExternalCommunicationConfigurationData ConfigurationData;
 
-    public void SetupThreads()
-    {
-        try
+        /// <summary>
+        ///     CommunicationThread to manage the communication
+        /// </summary>
+        protected CommunicationThread CommunicationThread;
+
+        /// <summary>
+        ///     Flags to check the thread and data
+        /// </summary>
+        protected volatile bool DataReceived = false;
+
+        protected bool ThreadReady;
+
+        /// <summary>
+        ///     Abstract function to send the first message
+        /// </summary>
+        public abstract void SendFirstMessage();
+
+        /// <summary>
+        ///     Abstract function to send the last message
+        /// </summary>
+        public abstract void SendLastMessage();
+
+        /// <summary>
+        ///     Check the process is running
+        /// </summary>
+        /// <returns>If the process is found</returns>
+        public bool CheckProcess()
         {
-            if (!threadReady)
+            Process[] processes = Process.GetProcessesByName(ConfigurationData.ProcessName);
+            Process process;
+
+            if (processes.Length != 0)
             {
-                communicationThread = new CommunicationThread(configurationData.ipAddress,configurationData.port,configurationData.socketType,configurationData.protocolType,configurationData.bufferSize);
-                threadReady = communicationThread.Connected;
-                communicationThread.Start();
+                process = processes[0];
+                GetLogger().Debug("Process found" + process.MachineName);
+                return true;
+            }
+
+            GetLogger().Error("Process not found");
+            return false;
+        }
+
+        /// <summary>
+        ///     Setup the communicatioThread
+        /// </summary>
+        public void SetupThreads()
+        {
+            try
+            {
+                if (!ThreadReady)
+                {
+                    CommunicationThread = new CommunicationThread(ConfigurationData.IpAddress,
+                                                                  ConfigurationData.Port,
+                                                                  ConfigurationData.SocketType,
+                                                                  ConfigurationData.ProtocolType,
+                                                                  ConfigurationData.BufferSize);
+
+                    ThreadReady = CommunicationThread.Connected;
+                    CommunicationThread.Start();
+                }
+            }
+            catch (Exception e)
+            {
+                GetLogger().Error("Socket error:" + e);
+                CloseThread();
             }
         }
-        catch (Exception e)
+
+        /// <summary>
+        ///     Close the communicationThread
+        /// </summary>
+        public void CloseThread()
         {
-            GetLogger().Error("Socket error:" + e);
-            CloseThread();
+            ThreadReady = false;
+            CommunicationThread.EndThread = true;
         }
-    }
-    
-    public void CloseThread()
-    {
-        threadReady = false;
-        communicationThread.EndThread = true;
     }
 }
