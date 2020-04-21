@@ -27,6 +27,16 @@ namespace WhateverDevs.ExternalCommunication.Runtime
         protected bool ThreadReady;
 
         /// <summary>
+        ///     Abstract function to init the manager
+        /// </summary>
+        public abstract void Init();
+        
+        /// <summary>
+        ///     Abstract function to recieve messages
+        /// </summary>
+        public abstract void RecieveMessage(byte[] array);
+        
+        /// <summary>
         ///     Abstract function to send the first message
         /// </summary>
         public abstract void SendFirstMessage();
@@ -90,5 +100,7 @@ namespace WhateverDevs.ExternalCommunication.Runtime
             ThreadReady = false;
             CommunicationThread.EndThread = true;
         }
+        
+        
     }
 }

@@ -105,20 +105,27 @@ namespace WhateverDevs.ExternalCommunication.Runtime
         /// </summary>
         protected override void OnFinished()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Sending shutdown to port ").Append(endPoint.Port);
-            GetLogger().Debug(sb.ToString());
-            socket.Shutdown(SocketShutdown.Send);
-            socket.Close();
-            Connected = false;
+            if (socket.Connected)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Sending shutdown to port ").Append(endPoint.Port);
+                GetLogger().Debug(sb.ToString());
+                socket.Shutdown(SocketShutdown.Send);
+                socket.Close();
+                Connected = false;
 
-            float threadTimes = 0;
+                float threadTimes = 0;
 
-            for (int i = deltaTimesThread.Count / 2; i < deltaTimesThread.Count; ++i)
-                threadTimes += deltaTimesThread.ElementAt(i);
+                for (int i = deltaTimesThread.Count / 2; i < deltaTimesThread.Count; ++i)
+                    threadTimes += deltaTimesThread.ElementAt(i);
 
-            float threadFreq = threadTimes / (deltaTimesThread.Count - deltaTimesThread.Count / 2);
-            GetLogger().Warn("Average timeStamp thread: " + threadFreq);
+                float threadFreq = threadTimes / (deltaTimesThread.Count - deltaTimesThread.Count / 2);
+                GetLogger().Warn("Average timeStamp thread: " + threadFreq);
+            }
+            else
+            {
+                GetLogger().Warn("The connection was already down");
+            }
         }
     }
 }
