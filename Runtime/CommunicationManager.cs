@@ -100,7 +100,5 @@ namespace WhateverDevs.ExternalCommunication.Runtime
             ThreadReady = false;
             CommunicationThread.EndThread = true;
         }
-        
-        
     }
 }
