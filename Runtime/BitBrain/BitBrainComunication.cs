@@ -8,10 +8,8 @@ namespace ExternalCommunicationDev
     /// <summary>
     ///     BitBrainSampleManager sample to test features
     /// </summary>
-    public class BitBrainManager : CommunicationManager
+    public class BitBrainComunication : CommunicationManager
     {
-        public TextMesh textMesh;
-
         public static long Timestamp;
 
         public void SetConfigurationData(ExternalCommunicationConfigurationData data) => ConfigurationData = data;

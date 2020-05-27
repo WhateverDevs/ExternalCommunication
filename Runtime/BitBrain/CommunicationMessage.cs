@@ -95,7 +95,7 @@ namespace ExternalCommunicationDev
             {
                 RootObject a = serializer.From<RootObject>(allJsons[i]); //todo change
                 Info = a;
-                BitBrainManager.Timestamp = a.Data.Blocks[0].Timestamp;
+                BitBrainComunication.Timestamp = a.Data.Blocks[0].Timestamp;
             }
         }
 
