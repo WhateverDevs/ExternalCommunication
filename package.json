@@ -1,6 +1,6 @@
 {
   "name": "varguiniano.externalcommunication",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "displayName": "External Communication",
   "description": "External communication",
   "dependencies": {

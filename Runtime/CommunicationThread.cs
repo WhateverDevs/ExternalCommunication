@@ -78,6 +78,8 @@ namespace WhateverDevs.ExternalCommunication.Runtime
                                         }); // Send this empty message to trigger a reinitialization attempt
 
                 ExceptionRaised?.Invoke();
+                
+                EndThread = true;
             }
             catch (Exception e)
             {
